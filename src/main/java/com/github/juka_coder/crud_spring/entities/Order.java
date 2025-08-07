@@ -8,7 +8,9 @@ import org.hibernate.mapping.Join;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_order")
@@ -21,6 +23,9 @@ public class Order implements Serializable {
     private Instant moment;
 
     private Integer orderStatus;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> items = new HashSet<>();
 
     @ManyToOne
     @JoinColumn(name = "client_id")
@@ -51,6 +56,14 @@ public class Order implements Serializable {
 
     public void setMoment(Instant moment) {
         this.moment = moment;
+    }
+
+    public void setOrderStatus(Integer orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
     public OrderStatus getOrderStatus() {

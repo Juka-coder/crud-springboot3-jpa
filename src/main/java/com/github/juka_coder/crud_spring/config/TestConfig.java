@@ -1,14 +1,8 @@
 package com.github.juka_coder.crud_spring.config;
 
-import com.github.juka_coder.crud_spring.entities.Category;
-import com.github.juka_coder.crud_spring.entities.Order;
-import com.github.juka_coder.crud_spring.entities.Product;
-import com.github.juka_coder.crud_spring.entities.User;
+import com.github.juka_coder.crud_spring.entities.*;
 import com.github.juka_coder.crud_spring.entities.enums.OrderStatus;
-import com.github.juka_coder.crud_spring.repositories.CategoryRepository;
-import com.github.juka_coder.crud_spring.repositories.OrderRepository;
-import com.github.juka_coder.crud_spring.repositories.ProductRepository;
-import com.github.juka_coder.crud_spring.repositories.UserRepository;
+import com.github.juka_coder.crud_spring.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +26,9 @@ public class TestConfig implements CommandLineRunner {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -68,5 +65,13 @@ public class TestConfig implements CommandLineRunner {
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
         userRepository.saveAll(Arrays.asList(u1, u2));
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
+
+        OrderItem oi1 = new OrderItem(o1, p1, p1.getPrice(), 2);
+        OrderItem oi2 = new OrderItem(o1, p3, p3.getPrice(), 1);
+        OrderItem oi3 = new OrderItem(o2, p3, p3.getPrice(), 2);
+        OrderItem oi4 = new OrderItem(o3, p5, p5.getPrice(), 2);
+
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2, oi3,oi4));
     }
+
 }
